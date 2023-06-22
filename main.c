@@ -1,4 +1,4 @@
-#include "sample.h"
+#include "my_unity.h"
 #include "fixture.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -53,7 +53,13 @@ MAKE_TEST(groupName2, testName2) {
 	return 0;
 }
 
-BEFORE_TEST(groupName1) {
+AFTER_ALL_TEST(groupName1) {
+	hoge = 2;
+	printf("-- after test [ hoge = %d ]\n", hoge);
+	return 1;
+}
+
+BEFORE_ALL_TEST(groupName1) {
 	hoge = 1;
 	printf("-- before test [ hoge = %d ] \n", hoge);
 	return 1;
@@ -81,9 +87,10 @@ int main(void) {
 	INIT_TEST(groupName1, testName1);
 	INIT_TEST(groupName1, testName2);
 	INIT_TEST(groupName2, testName2);
-	INIT_BEFORE_TEST(groupName1);
+	INIT_BEFORE_ALL_TEST(groupName1);
 	INIT_BEFORE_EACH_TEST(groupName1);
 	INIT_BEFORE_EACH_TEST(groupName2);
+	INIT_AFTER_ALL_TEST(groupName1);
 	runTest();
 	teardown(teardownFunc);
 	return 0;

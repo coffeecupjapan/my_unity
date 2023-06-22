@@ -1,4 +1,4 @@
-#include "sample.h"
+#include "my_unity.h"
 #include<stdio.h>
 #include<string.h>
 
@@ -16,8 +16,8 @@
 #define INIT_TEST(groupName, testName)\
 	TEST__##groupName##__##testName##__run();
 
-#define BEFORE_TEST(groupName)\
-	int BEFORE__TEST__##groupName##_ (void);\
+#define BEFORE_ALL_TEST(groupName)\
+	int BEFORE__TEST__##groupName##_(void);\
 	void BEFORE__TEST__##groupName##__run(void);\
 	void BEFORE__TEST__##groupName##__run(void){\
 		addBefore(#groupName, BEFORE__TEST__##groupName##_, true);\
@@ -32,8 +32,30 @@
 	}\
 	int BEFORE__EACH__TEST__##groupName##_ (void)
 
-#define INIT_BEFORE_TEST(groupName)\
+#define AFTER_ALL_TEST(groupName)\
+	int AFTER__TEST__##groupName##_(void);\
+	void AFTER__TEST__##groupName##__run(void);\
+	void AFTER__TEST__##groupName##__run(void){\
+		addAfter(#groupName, AFTER__TEST__##groupName##_, true);\
+	}\
+	int AFTER__TEST__##groupName##_(void)
+
+#define AFTER_EACH_TEST(groupName)\
+	int AFTER__EACH__TEST__##groupName##_ (void);\
+	void AFTER__EACH__TEST__##groupName##__run(void);\
+	void AFTER__EACH__TEST__##groupName##__run(void){\
+		addAfter(#groupName, AFTER__EACH__TEST__##groupName##_, false);\
+	}\
+	int AFTER__EACH__TEST__##groupName##_ (void)
+
+#define INIT_BEFORE_ALL_TEST(groupName)\
 	BEFORE__TEST__##groupName##__run();
 
 #define INIT_BEFORE_EACH_TEST(groupName)\
 	BEFORE__EACH__TEST__##groupName##__run();
+
+#define INIT_AFTER_ALL_TEST(groupName)\
+	AFTER__TEST__##groupName##__run();
+
+#define INIT_AFTER_EACH_TEST(groupName)\
+	AFTER__EACH__TEST__##groupName##__run();
